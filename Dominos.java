@@ -55,28 +55,32 @@ public class Dominos{
         Tupla u;
         int i;
 
+        //System.out.println("pos: " + pos);
+
         if (disponiveis.isEmpty()) achou = true;
         else{
 
             for (i = 0; i < disponiveis.size(); i++){
 
                 u = disponiveis.get(i);
-                if (t.a() == u.a()){
+                if (t.b() == u.a()){
 
-                    solucao[pos] = u;
+                    //System.out.println("Igual: "+t.a()+" == "+u.a()+" & "+t.b()+" , "+u.b());
                     disponiveis.remove(u);
-                    BuscarSolucao(u, disponiveis)
+                    solucao[pos] = u;
+                    BuscarSolucao(u, disponiveis, pos+1);
                 }
-                else if (t.a() == u.b()){
+                else if (t.b() == u.b()){
 
+                    //System.out.println("Igual: "+t.a()+" == "+u.a()+" & "+t.b()+" , "+u.b());
                     disponiveis.remove(u);
                     u.flip();
                     solucao[pos] = u;
-                    BuscarSolucao(u, disponiveis);
+                    BuscarSolucao(u, disponiveis, pos+1);
                 }
                 if (achou) break;
             }
-        //}
+        }
     }
 
     private static void ImprimeResposta(){
@@ -84,8 +88,9 @@ public class Dominos{
         if (achou){
 
             for (int i = 0; i < solucao.length; i++)
-                //System.out.print(solucao[i].a() + " " + solucao[i].b() + " ");
-                System.out.print("[" + solucao[i].a() + " " + solucao[i].b() + "] ");
+                if (solucao[i] != null)
+                    //System.out.print(solucao[i].a() + " " + solucao[i].b() + " ");
+                    System.out.print("[" + solucao[i].a() + " " + solucao[i].b() + "] ");
             System.out.println();
         }
         else System.out.println("Não foi encontrada uma solução!");
