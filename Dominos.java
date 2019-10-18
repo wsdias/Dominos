@@ -3,9 +3,9 @@ import java.util.ArrayList;
 public class Dominos{
 
     private static ArrayList<Tupla> entrada;
-    private static ArrayList<Tupla> processar;
-    private static ArrayList<Tupla> processadas;
+    private static Tupla[] solucao;
     private static int nPecas;
+    private static boolean achou;
 
     public static void main (String[] args){
 
@@ -13,59 +13,86 @@ public class Dominos{
 
         nPecas = Integer.valueOf(args[0]);
         entrada = new ArrayList<Tupla>();
+        solucao = new Tupla[nPecas];
 
-        // Corrigir leitura
+        // Trocar leitura de arquivo padrão
         for (int i = 1; i <= nPecas; i = i + 2){
 
             a = Integer.valueOf(args[i]);
             b = Integer.valueOf(args[i+1]);
             entrada.add(new Tupla(a,b));
         }
+        /* ----------------------------- */
 
         for (Tupla t : entrada)
             System.out.println("("+t.a()+", "+t.b()+")");
 
-        //System.out.println(BuscarSolucao());
-        Iterativo();
+        IniciarBusca();
     }
 
-    /*private static boolean BuscarSolucao(){
+    private static void IniciarBusca(){
 
-        boolean aux = true;
-        int i = 0;
+        ArrayList<Tupla> disponiveis;
+        int i, j;
 
-        while(aux){
+        achou = false;
+        for (i = 0; i < entrada.size(); i++){
 
-            aux = i != processar.size()-1 ? true : false;
-            if (aux) aux = Buscar(processar.get(i), i);
+            disponiveis = new ArrayList<Tupla>();
+            for (j = 0; j < entrada.size(); j++)
+                disponiveis.add(entrada.get(j));
+            disponiveis.remove(i);
+            solucao[0] = entrada.get(i);
+            BuscarSolucao(entrada.get(i), disponiveis, 1);
+            if (achou) break;
         }
-        return aux;
-    }*/
 
-    /*private static boolean Buscar(Tupla t, int i){
+        ImprimeResposta();
+    }
 
-        
-    }*/
+    private static void BuscarSolucao(Tupla t, ArrayList<Tupla> disponiveis, int pos){
 
-    public static void Iterativo(){
+        Tupla u;
+        int i;
 
-        int[] sequencia = new int[nPecas];
+        //if (disponiveis.isEmpty()) return;
+        //else{
 
-        int posicao = 0;
-        for (int i = 0; i < nPecas; i++){
+            for (i = 0; i < disponiveis.size(); i++){
 
-            for (int j = 0; j < nPecas; j++){
+                u = disponiveis.get(i);
+                if (t.a() == u.a()){
 
-                if (i != j){
+                    solucao[pos] = u;
+                    disponiveis.remove(u);
+                    BuscarSolucao(u, disponiveis)
+                }
+                else if (t.a() == u.b()){
 
-                    if (entrada.get(i).b() == entrada.get(j).a()){
-                        // ...
-                    }
-                    // flip...
+                    disponiveis.remove(u);
+                    u.flip();
+                    solucao[pos] = u;
+                    BuscarSolucao(u, disponiveis);
                 }
             }
-        }
+        //}
     }
+
+    private static void ImprimeResposta(){
+
+        if (achou){
+
+        }
+        else System.out.println("Não foi encontrada uma solução!");
+    }
+
+    /*private static ArrayList<Tupla> construirDiponiveis(Tupla t, ArrayList<Tupla> tuplas){
+
+        ArrayList<Tupla> disponiveis = new ArrayList<Tupla>();
+        for (int i = 0; i < tuplas.size(); i++)
+            if (!t.igual(tuplas.get(i)) disponiveis.add(tuplas.get(i));
+        return disponiveis;
+    }*/
 }
 
 class Tupla{
@@ -92,5 +119,12 @@ class Tupla{
         int aux = a;
         a = b;
         b = aux;
+    }
+
+    public boolean igual(Tupla t){
+
+        if (a == t.a() && b == t.b())
+            return true;
+        return false;
     }
 }
