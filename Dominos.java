@@ -55,8 +55,8 @@ public class Dominos{
         Tupla u;
         int i;
 
-        //if (disponiveis.isEmpty()) return;
-        //else{
+        if (disponiveis.isEmpty()) achou = true;
+        else{
 
             for (i = 0; i < disponiveis.size(); i++){
 
@@ -74,6 +74,7 @@ public class Dominos{
                     solucao[pos] = u;
                     BuscarSolucao(u, disponiveis);
                 }
+                if (achou) break;
             }
         //}
     }
@@ -82,6 +83,10 @@ public class Dominos{
 
         if (achou){
 
+            for (int i = 0; i < solucao.length; i++)
+                //System.out.print(solucao[i].a() + " " + solucao[i].b() + " ");
+                System.out.print("[" + solucao[i].a() + " " + solucao[i].b() + "] ");
+            System.out.println();
         }
         else System.out.println("Não foi encontrada uma solução!");
     }
