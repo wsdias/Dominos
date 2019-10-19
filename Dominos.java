@@ -1,4 +1,7 @@
 import java.util.ArrayList;
+import java.io.FileReader;
+import java.io.BufferedReader;
+import java.io.IOException;
 
 public class Dominos{
 
@@ -9,26 +12,17 @@ public class Dominos{
 
     public static void main (String[] args){
 
-        int a, b;
+        if (!args[0].isEmpty()){
 
-        nPecas = Integer.valueOf(args[0]);
-        entrada = new ArrayList<Tupla>();
-        solucao = new Tupla[nPecas];
-
-        // Trocar leitura de arquivo padrão
-        for (int i = 1; i <= nPecas; i = i + 2){
-
-            a = Integer.valueOf(args[i]);
-            b = Integer.valueOf(args[i+1]);
-            entrada.add(new Tupla(a,b));
+            lerArquivo(args[0]);
+            //for (Tupla t : entrada)
+            //    System.out.println("("+t.a()+", "+t.b()+")");
+            IniciarBusca();
         }
-        /* ----------------------------- */
-
-        for (Tupla t : entrada)
-            System.out.println("("+t.a()+", "+t.b()+")");
-
-        IniciarBusca();
+        else System.out.println("Formato: java Dominos entrada");
     }
+
+    /* -------------------------------------------------------------------------------- */
 
     private static void IniciarBusca(){
 
@@ -49,6 +43,8 @@ public class Dominos{
 
         ImprimeResposta();
     }
+
+    /* -------------------------------------------------------------------------------- */
 
     private static void BuscarSolucao(Tupla t, ArrayList<Tupla> disponiveis, int pos){
 
@@ -83,26 +79,53 @@ public class Dominos{
         }
     }
 
+    /* -------------------------------------------------------------------------------- */
+
     private static void ImprimeResposta(){
 
         if (achou){
 
-            for (int i = 0; i < solucao.length; i++)
+            for (int i = 0; i < solucao.length; i++){
+
                 if (solucao[i] != null)
-                    //System.out.print(solucao[i].a() + " " + solucao[i].b() + " ");
+                    // Mudar saída (mais simples, folha)
                     System.out.print("[" + solucao[i].a() + " " + solucao[i].b() + "] ");
+            }
             System.out.println();
         }
         else System.out.println("Não foi encontrada uma solução!");
     }
 
-    /*private static ArrayList<Tupla> construirDiponiveis(Tupla t, ArrayList<Tupla> tuplas){
+    /* -------------------------------------------------------------------------------- */
 
-        ArrayList<Tupla> disponiveis = new ArrayList<Tupla>();
-        for (int i = 0; i < tuplas.size(); i++)
-            if (!t.igual(tuplas.get(i)) disponiveis.add(tuplas.get(i));
-        return disponiveis;
-    }*/
+    public static void lerArquivo(String nomeArquivo){
+
+        BufferedReader buffer;
+        FileReader arquivo;
+        String[] linha;
+        int a, b, i;
+
+        entrada = new ArrayList<Tupla>();
+        try{
+
+            arquivo = new FileReader(nomeArquivo);
+            buffer = new BufferedReader(arquivo);
+            linha = new String[2];
+
+            nPecas = Integer.valueOf(buffer.readLine());
+            for (i = 0; i < nPecas; i++){
+
+                linha = buffer.readLine().split(" ");
+                a = Integer.valueOf(linha[0]);
+                b = Integer.valueOf(linha[1]);
+                entrada.add(new Tupla(a, b));
+            }
+            arquivo.close ();
+        }
+        catch (IOException e){
+            System.err.println (e.getMessage ());
+        }
+    }
 }
 
 class Tupla{
@@ -129,12 +152,5 @@ class Tupla{
         int aux = a;
         a = b;
         b = aux;
-    }
-
-    public boolean igual(Tupla t){
-
-        if (a == t.a() && b == t.b())
-            return true;
-        return false;
     }
 }
