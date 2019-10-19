@@ -1,3 +1,12 @@
+/*
+ *  T3 - Projeto e Otimização de Algoritmos
+ *
+ *  Willian Schmiele Dias
+ *
+ *  2019/2
+ *
+ */
+
 import java.util.ArrayList;
 import java.io.FileReader;
 import java.io.BufferedReader;
@@ -12,12 +21,13 @@ public class Dominos{
 
     public static void main (String[] args){
 
-        if (!args[0].isEmpty()){
+        if (args.length > 0 && !args[0].isEmpty()){
 
             lerArquivo(args[0]);
             //for (Tupla t : entrada)
             //    System.out.println("("+t.a()+", "+t.b()+")");
             IniciarBusca();
+            ImprimeResposta();
         }
         else System.out.println("Formato: java Dominos arquivo");
     }
@@ -42,8 +52,6 @@ public class Dominos{
             BuscarSolucao(entrada.get(i), disponiveis, 1);
             if (achou) break;
         }
-
-        ImprimeResposta();
     }
 
     /* -------------------------------------------------------------------------------- */
@@ -54,7 +62,6 @@ public class Dominos{
         int i;
 
         //System.out.println("pos: " + pos);
-
         if (disponiveis.isEmpty()) achou = true;
         else{
 
@@ -87,13 +94,9 @@ public class Dominos{
 
         if (achou){
 
-            for (int i = 0; i < solucao.length; i++){
-
-                if (solucao[i] != null)
-                    // Mudar saída (mais simples, folha)
-                    //System.out.print("[" + solucao[i].a() + " " + solucao[i].b() + "] ");
-                    System.out.print(solucao[i].a() + " " + solucao[i].b() + " ");
-            }
+            for (int i = 0; i < solucao.length; i++)
+                System.out.print("[" + solucao[i].a() + " " + solucao[i].b() + "] ");
+                //System.out.print(solucao[i].a() + " " + solucao[i].b() + " ");
             System.out.println();
         }
         else System.out.println("Não foi encontrada uma solução!");
@@ -126,6 +129,7 @@ public class Dominos{
             arquivo.close ();
         }
         catch (IOException e){
+
             System.err.println (e.getMessage ());
         }
     }
