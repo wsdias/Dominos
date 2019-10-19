@@ -19,7 +19,7 @@ public class Dominos{
             //    System.out.println("("+t.a()+", "+t.b()+")");
             IniciarBusca();
         }
-        else System.out.println("Formato: java Dominos entrada");
+        else System.out.println("Formato: java Dominos arquivo");
     }
 
     /* -------------------------------------------------------------------------------- */
@@ -29,7 +29,9 @@ public class Dominos{
         ArrayList<Tupla> disponiveis;
         int i, j;
 
+        solucao = new Tupla[nPecas];
         achou = false;
+
         for (i = 0; i < entrada.size(); i++){
 
             disponiveis = new ArrayList<Tupla>();
@@ -89,7 +91,8 @@ public class Dominos{
 
                 if (solucao[i] != null)
                     // Mudar saída (mais simples, folha)
-                    System.out.print("[" + solucao[i].a() + " " + solucao[i].b() + "] ");
+                    //System.out.print("[" + solucao[i].a() + " " + solucao[i].b() + "] ");
+                    System.out.print(solucao[i].a() + " " + solucao[i].b() + " ");
             }
             System.out.println();
         }
