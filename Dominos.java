@@ -27,7 +27,7 @@ public class Dominos{
             //for (Tupla t : entrada)
             //    System.out.println("("+t.a()+", "+t.b()+")");
             IniciarBusca();
-            ImprimeResposta();
+            ImprimirResposta();
         }
         else System.out.println("Formato: java Dominos arquivo");
     }
@@ -38,6 +38,7 @@ public class Dominos{
 
         ArrayList<Tupla> disponiveis;
         int i, j;
+        Tupla t;
 
         solucao = new Tupla[nPecas];
         achou = false;
@@ -48,8 +49,15 @@ public class Dominos{
             for (j = 0; j < entrada.size(); j++)
                 disponiveis.add(entrada.get(j));
             disponiveis.remove(i);
-            solucao[0] = entrada.get(i);
-            BuscarSolucao(entrada.get(i), disponiveis, 1);
+
+            t = entrada.get(i);
+            solucao[0] = t;
+            BuscarSolucao(t, disponiveis, 1);
+            if (achou) break;
+
+            t.flip();
+            //System.out.println("disp_length: " + disponiveis.size());
+            BuscarSolucao(t, disponiveis, 1);
             if (achou) break;
         }
     }
@@ -90,7 +98,7 @@ public class Dominos{
 
     /* -------------------------------------------------------------------------------- */
 
-    private static void ImprimeResposta(){
+    private static void ImprimirResposta(){
 
         if (achou){
 
