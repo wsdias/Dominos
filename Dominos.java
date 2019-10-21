@@ -8,9 +8,7 @@
  */
 
 import java.util.ArrayList;
-import java.io.FileReader;
-import java.io.BufferedReader;
-import java.io.IOException;
+import java.util.Scanner;
 
 public class Dominos{
 
@@ -21,13 +19,31 @@ public class Dominos{
 
     public static void main (String[] args){
 
-        if (args.length > 0 && !args[0].isEmpty()){
+        String[] pecas;
+        Scanner input;
+        int i, a, b;
 
-            lerArquivo(args[0]);
-            IniciarBusca();
-            ImprimirResposta();
+        entrada = new ArrayList<Tupla>();
+        input = new Scanner(System.in);
+
+        input.useDelimiter("\n");
+        System.out.println("Quantidade de peças: ");
+        nPecas = input.nextInt();
+
+        for (i = 0; i < nPecas; i++){
+
+            System.out.print("Peça " + (i+1) + ": ");
+            pecas = input.next().split(" ");
+            a = Integer.valueOf(pecas[0]);
+            b = Integer.valueOf(pecas[1]);
+            entrada.add(new Tupla(a, b));
         }
-        else System.out.println("Formato: java Dominos arquivo");
+
+        //for (Tupla t : entrada)
+        //    System.out.println("("+t.a()+", "+t.b()+")");
+
+        IniciarBusca();
+        ImprimirResposta();
     }
 
     /* -------------------------------------------------------------------------------- */
@@ -101,38 +117,6 @@ public class Dominos{
             System.out.println();
         }
         else System.out.println("Não foi encontrada uma solução!");
-    }
-
-    /* -------------------------------------------------------------------------------- */
-
-    public static void lerArquivo(String nomeArquivo){
-
-        BufferedReader buffer;
-        FileReader arquivo;
-        String[] linha;
-        int a, b, i;
-
-        entrada = new ArrayList<Tupla>();
-        try{
-
-            arquivo = new FileReader(nomeArquivo);
-            buffer = new BufferedReader(arquivo);
-            linha = new String[2];
-
-            nPecas = Integer.valueOf(buffer.readLine());
-            for (i = 0; i < nPecas; i++){
-
-                linha = buffer.readLine().split(" ");
-                a = Integer.valueOf(linha[0]);
-                b = Integer.valueOf(linha[1]);
-                entrada.add(new Tupla(a, b));
-            }
-            arquivo.close ();
-        }
-        catch (IOException e){
-
-            System.err.println (e.getMessage ());
-        }
     }
 }
 
