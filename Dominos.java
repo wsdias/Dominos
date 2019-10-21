@@ -27,7 +27,7 @@ public class Dominos{
         input = new Scanner(System.in);
 
         input.useDelimiter("\n");
-        System.out.println("Quantidade de peças: ");
+        System.out.print("Quantidade de peças: ");
         nPecas = input.nextInt();
 
         for (i = 0; i < nPecas; i++){
