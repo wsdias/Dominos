@@ -79,6 +79,7 @@ public class Dominos{
 
     private static void BuscarSolucao(Tupla t, ArrayList<Tupla> disponiveis, int pos){
 
+        ArrayList<Tupla> nDisp;
         Tupla u;
         int i;
 
@@ -90,16 +91,26 @@ public class Dominos{
                 u = disponiveis.get(i);
                 if (t.b() == u.a()){
 
-                    disponiveis.remove(u);
+                    //disponiveis.remove(u);
+                    nDisp = new ArrayList<Tupla>();
+                    for (Tupla tx : disponiveis)
+                        nDisp.add(tx);
+                    nDisp.remove(i);
+
                     solucao[pos] = u;
-                    BuscarSolucao(u, disponiveis, pos+1);
+                    BuscarSolucao(u, nDisp, pos+1);
                 }
                 else if (t.b() == u.b()){
 
-                    disponiveis.remove(u);
+                    //disponiveis.remove(u);
+                    nDisp = new ArrayList<Tupla>();
+                    for (Tupla tx : disponiveis)
+                        nDisp.add(tx);
+                    nDisp.remove(i);
+
                     u.flip();
                     solucao[pos] = u;
-                    BuscarSolucao(u, disponiveis, pos+1);
+                    BuscarSolucao(u, nDisp, pos+1);
                 }
                 if (achou) break;
             }
