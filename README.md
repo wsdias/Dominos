@@ -4,14 +4,14 @@ Implementação em Java para, dado um conjunto de peças de dominó (numeradas d
 
 - Exemplo:
 
-    - Entrada:\
-    3       # Número de peças\
-    3 4     # Primeira peça\
-    2 1     # Segunda peça\
-    1 3     # Terceira peça
+    - Entrada:<br/>
+    &nbsp;&nbsp;  3     &nbsp;&nbsp;&nbsp;&nbsp;  # Número de peças\
+    &nbsp;&nbsp;  3 4   &nbsp;                    # Primeira peça\
+    &nbsp;&nbsp;  2 1   &nbsp;                    # Segunda peça\
+    &nbsp;&nbsp;  1 3   &nbsp;                    # Terceira peça
 
-    - Saída:\
-    4 3 3 1 1 2
+    - Saída:<br/>
+    &nbsp;&nbsp;    4 3 3 1 1 2
 
 ## Requisitos
 
